@@ -39,6 +39,14 @@ $docker-compose exec nginx ls -la /etc/letsencrypt
 ## Step 4 :: in certbot
 * Change from `--staging` to `--force-renewal`
 
+```
+$docker compose down
+$docker compose up -d web
+$docker compose up -d nginx
+
+$docker compose up -d certbot
+```
+
 ## Step 5 :: Working with HTTPS
 ```
 $docker compose down
