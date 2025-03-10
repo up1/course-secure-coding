@@ -29,11 +29,12 @@ Testing with postman
 * Import from file `/postman/api-dotnet.postman_collection.json`
 
 * Broken Object Level Authorization
-  * 1. Generate token
-  * 2. Get order by id
+  1. Generate token
+  2. Get order by id
 * Broken Authentication
-  * 3. Register
-       * Hash password with SHA256
-  * 4. Login with secure
+  3. Register
+     * Hash password with SHA256
+  4. Login with secure
+     * Error message 
 * Broken Object Property Level Authorization
-  * 5. Update datae from whitelisted fields
+  5. Update datae from whitelisted fields
