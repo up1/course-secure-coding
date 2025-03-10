@@ -1,0 +1,5 @@
+services:
+  api01:
+    build: ./01-api
+    ports:
+      - "8081:8080"
