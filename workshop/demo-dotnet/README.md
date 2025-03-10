@@ -7,6 +7,10 @@
 * Broken Object Level Authorization
 * Broken Authentication
 * Broken Object Property Level Authorization
+* Unrestricted Resource Consumption
+  * Paging
+  * Rate limiting
+  * file size limits on uploads
 
 **A login form that**
 * Doesn't validate passwords securely
@@ -37,4 +41,7 @@ Testing with postman
   4. Login with secure
      * Error message 
 * Broken Object Property Level Authorization
-  5. Update datae from whitelisted fields
+  5. Update data from whitelisted fields
+* Unrestricted Resource Consumption
+  6. Working with rate limiting
+
