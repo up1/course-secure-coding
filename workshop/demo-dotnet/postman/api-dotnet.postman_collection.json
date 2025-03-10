@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "171f89c3-8955-47b0-85d4-86304041fcf6",
+		"name": "api-dotnet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1453931",
+		"_collection_link": "https://red-firefly-245852.postman.co/workspace/mock-api~5727ab99-9e6e-4f5f-b6b8-38e1001ee495/collection/1453931-171f89c3-8955-47b0-85d4-86304041fcf6?action=share&source=collection_link&creator=1453931"
+	},
+	"item": [
+		{
+			"name": "01",
+			"item": [
+				{
+					"name": "1. Generate token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"user01\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/auth"
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get order by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "your token"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sub\": \"user-123\", // This must match Order.UserId\n  \"name\": \"demo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/orders/1"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
