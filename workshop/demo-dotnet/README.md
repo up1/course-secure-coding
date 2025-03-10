@@ -1,4 +1,6 @@
 # Workshop with .NET C#
+* .NET 9
+* In-memory database
 
 
 ## 1. Broken Object Level Authorization and Broken Authentication
