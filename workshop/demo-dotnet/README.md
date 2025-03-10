@@ -3,7 +3,10 @@
 * In-memory database
 
 
-## 1. Broken Object Level Authorization and Broken Authentication
+## 1. Demo 01 with .NET
+* Broken Object Level Authorization
+* Broken Authentication
+* Broken Object Property Level Authorization
 
 **A login form that**
 * Doesn't validate passwords securely
@@ -26,3 +29,5 @@ Testing with postman
 * Import from file `/postman/api-dotnet.postman_collection.json`
   * 1. Generate token
   * 2. Get order by id
+  * 3. Register
+       * Hash password with SHA256

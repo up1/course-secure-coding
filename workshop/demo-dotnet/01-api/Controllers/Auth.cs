@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 [ApiController]
@@ -44,6 +46,35 @@ public class AuthController : ControllerBase
 
         return await Task.FromResult(Unauthorized());
     }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserLogin login)
+    {
+        if (await _db.Users.AnyAsync(u => u.Username == login.Username))
+            return BadRequest("Username already exists");
+
+        var user = new User
+        {
+            Username = login.Username,
+            PasswordHash = HashPassword(login.Password)
+        };
+
+        _db.Users.Add(user);
+        await _db.SaveChangesAsync();
+
+        // return Ok("User registered");
+
+        // Debug mode
+        return Ok(new { user });
+    }
+
+    private string HashPassword(string password)
+    {
+        using var sha = SHA256.Create();
+        var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return Convert.ToBase64String(bytes);
+    }
+
 }
 
 public record UserLogin(string Username, string Password);
