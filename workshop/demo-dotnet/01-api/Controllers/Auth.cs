@@ -12,10 +12,13 @@ public class AuthController : ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly ILogger<AuthController> _logger;
-    public AuthController(ILogger<AuthController> logger, AppDbContext db)
+    private readonly ITokenService _tokenService;
+
+    public AuthController(ILogger<AuthController> logger, AppDbContext db, ITokenService tokenService)
     {
         _logger = logger;
         _db = db;
+        _tokenService = tokenService;
     }
 
     [HttpPost]
@@ -24,7 +27,7 @@ public class AuthController : ControllerBase
         if (login.Username == "user01" && login.Password == "password")
         {
             var claims = new[]{
-            new Claim(JwtRegisteredClaimNames.Sub, "user-123"),
+            new Claim(JwtRegisteredClaimNames.Sub, "1"), // Hard code user id
             new Claim(JwtRegisteredClaimNames.UniqueName, login.Username),
             new Claim("role", "user")
         };
@@ -73,6 +76,24 @@ public class AuthController : ControllerBase
         using var sha = SHA256.Create();
         var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
         return Convert.ToBase64String(bytes);
+    }
+
+
+    [HttpPost("login-secure")] // ✅ Secure Authentication
+    public async Task<IActionResult> LoginSecure(UserLogin login)
+    {
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == login.Username);
+
+        if (user == null || !VerifyPassword(login.Password, user.PasswordHash))
+            return Unauthorized(new { error = "Invalid username or password" });
+
+        var token = _tokenService.GenerateToken(user.Id.ToString(), user.Username);
+        return Ok(new { token });
+    }
+
+    private bool VerifyPassword(string password, string storedHash)
+    {
+        return HashPassword(password) == storedHash;
     }
 
 }

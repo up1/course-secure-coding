@@ -65,7 +65,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"sub\": \"user-123\", // This must match Order.UserId\n  \"name\": \"demo\"\n}",
+							"raw": "{\n  \"sub\": \"1\", // This must match Order.UserId\n  \"name\": \"demo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -78,6 +78,41 @@
 				},
 				{
 					"name": "3. Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"user01\",\n  \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/auth/register"
+					},
+					"response": []
+				},
+				{
+					"name": "4. Login with secure",
 					"event": [
 						{
 							"listen": "test",
@@ -111,7 +146,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8081/auth/register"
+						"url": "http://localhost:8081/auth/login-secure"
 					},
 					"response": []
 				}

@@ -31,3 +31,4 @@ Testing with postman
   * 2. Get order by id
   * 3. Register
        * Hash password with SHA256
+  * 4. Login with secure

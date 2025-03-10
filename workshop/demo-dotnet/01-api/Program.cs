@@ -21,6 +21,8 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<IAuthorizationHandler, OrderOwnerHandler>();
 
+builder.Services.AddScoped<ITokenService, TokenService>();
+
 // JWT Settings
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.Jwt.Key));
 builder.Services.AddAuthentication(options =>
@@ -56,9 +58,9 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
     db.Orders.AddRange(
-        new Order { Id = 1, UserId = "user-123", ProductName = "Laptop", TotalAmount = 1500 },
+        new Order { Id = 1, UserId = "1", ProductName = "Laptop", TotalAmount = 1500 },
         new Order { Id = 2, UserId = "user-456", ProductName = "Phone", TotalAmount = 800 },
-        new Order { Id = 3, UserId = "user-123", ProductName = "Monitor", TotalAmount = 300 }
+        new Order { Id = 3, UserId = "1", ProductName = "Monitor", TotalAmount = 300 }
     );
 
     db.SaveChanges();
