@@ -149,6 +149,30 @@
 						"url": "http://localhost:8081/auth/login-secure"
 					},
 					"response": []
+				},
+				{
+					"name": "5. Update data from whitelisted fields",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{LOGIN_TOKEN}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"username\": \"hacker\",\n  \"email\": \"hacker@example.com\",\n  \"isAdmin\": true,\n  \"role\": \"Admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/users/update-secure/1"
+					},
+					"response": []
 				}
 			]
 		}
