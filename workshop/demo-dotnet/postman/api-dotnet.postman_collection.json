@@ -12,6 +12,24 @@
 			"item": [
 				{
 					"name": "1. Generate token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"    var jsonData = pm.response.json();",
+									"",
+									"    pm.collectionVariables.set(\"LOGIN_TOKEN\", jsonData.token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -40,7 +58,7 @@
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "your token"
+								"token": "{{LOGIN_TOKEN}}"
 							}
 						},
 						"method": "GET",
@@ -59,6 +77,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "LOGIN_TOKEN",
+			"value": ""
 		}
 	]
 }

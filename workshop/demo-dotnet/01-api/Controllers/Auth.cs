@@ -9,10 +9,12 @@ using Microsoft.IdentityModel.Tokens;
 [Route("auth")]
 public class AuthController : ControllerBase
 {
+    private readonly AppDbContext _db;
     private readonly ILogger<AuthController> _logger;
-    public AuthController(ILogger<AuthController> logger)
+    public AuthController(ILogger<AuthController> logger, AppDbContext db)
     {
         _logger = logger;
+        _db = db;
     }
 
     [HttpPost]
@@ -20,8 +22,7 @@ public class AuthController : ControllerBase
     {
         if (login.Username == "user01" && login.Password == "password")
         {
-            var claims = new[]
-            {
+            var claims = new[]{
             new Claim(JwtRegisteredClaimNames.Sub, "user-123"),
             new Claim(JwtRegisteredClaimNames.UniqueName, login.Username),
             new Claim("role", "user")
@@ -32,7 +33,9 @@ public class AuthController : ControllerBase
                 audience: Constants.Jwt.Audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.Jwt.Key)), SecurityAlgorithms.HmacSha256)
+                signingCredentials: new SigningCredentials(
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.Jwt.Key)),
+                    SecurityAlgorithms.HmacSha256)
             );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
