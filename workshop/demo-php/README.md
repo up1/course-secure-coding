@@ -34,8 +34,31 @@ $curl http://localhost:8000/api/users/2/secure -H "X-User-ID: 1"
 ```
 
 ## Step 4 :: Broken Authentication
+* Passwords are stored insecurely (e.g. plain text)
+* Sessions/tokens are not securely handled
+* Authentication logic is weak or missing
 ```
 $curl -X POST http://localhost:8000/login \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "username=alice&password=password123"
+```
+
+## Step 5 :: Broken Object Property Level Authorization
+* When a user is allowed to update their profile, but the backend blindly accepts all input, malicious users can modify sensitive properties
+* Use whitelist
+
+Working with bad practice
+```
+$curl -X PATCH http://localhost:8000/api/profile/bad \
+  -H "X-User-ID: 1" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "email=alice@safe.com&role=admin"
+```
+
+Better
+```
+$curl -X PATCH http://localhost:8000/api/profile \
+  -H "X-User-ID: 1" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "email=alice@safe.com&role=admin"
 ```

@@ -12,9 +12,18 @@ $secretKey = 'super-secret-key'; // Use .env in real apps
 
 // ✅ Passwords are hashed (simulating DB)
 $users = [
-    ['id' => 1, 'username' => 'alice', 'password' => password_hash('password123', PASSWORD_BCRYPT)],
-    ['id' => 2, 'username' => 'bob', 'password' => password_hash('letmein', PASSWORD_BCRYPT)],
+    ['id' => 1, 'username' => 'alice', 'password' => password_hash('password123', PASSWORD_BCRYPT), 'email' => 'alice@example.com', 'role' => 'user'],
+    ['id' => 2, 'username' => 'bob', 'password' => password_hash('letmein', PASSWORD_BCRYPT), 'email' => 'bob@example.com', 'role' => 'admin'],
 ];
+
+function getUserById($users, $id) {
+    return array_filter($users, function($user) use ($id) {
+        return $user['id'] === $id;
+    });
+}
+
+
+// Middlewares
 
 // Simulated auth middleware using header "X-User-ID"
 $app->add(function (Request $request, $handler) use (&$users) {
@@ -23,7 +32,7 @@ $app->add(function (Request $request, $handler) use (&$users) {
         $response = new \Slim\Psr7\Response();
         return $response->withStatus(401)->withBody(\Slim\Psr7\Stream::createFromString('Unauthorized'));
     }
-    $request = $request->withAttribute('user', $users[$userId]);
+    $request = $request->withAttribute('user', getUserById($users, $userId));
     return $handler->handle($request);
 });
 
@@ -107,6 +116,37 @@ $app->post('/login', function (Request $request, Response $response) use ($users
 
     $response->getBody()->write("Invalid credentials");
     return $response->withStatus(401);
+});
+
+// ✅ Safe update with allowed field filtering
+$app->patch('/api/profile', function (Request $request, Response $response) use (&$users) {
+    $authUser = $request->getAttribute('user');
+    $parsed = $request->getParsedBody();
+
+    // ✅ Only allow specific fields
+    $allowedFields = ['email'];
+    $parsed = array_intersect_key($parsed, array_flip($allowedFields));
+    
+
+    // Validate input
+    if (empty($parsed)) {
+        $response->getBody()->write("No valid fields provided for update.");
+        return $response->withStatus(400);
+    }
+    // Validate before merge
+    if (isset($parsed['email']) && !filter_var($parsed['email'], FILTER_VALIDATE_EMAIL)) {
+        $response->getBody()->write("Invalid email format.");
+        return $response->withStatus(400);
+    }
+
+    // Merge and update
+    $users[$authUser['id']] = array_merge($users[$authUser['id']], $parsed);
+
+    $response->getBody()->write(json_encode([
+        'message' => 'Profile updated successfully',
+        'user' => $users[$authUser['id']]
+    ]));
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->run();
