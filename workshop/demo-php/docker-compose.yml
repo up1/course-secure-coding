@@ -1,0 +1,18 @@
+services:
+  php:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ./php:/var/www/slim_app
+    ports:
+      - "9000:9000"
+  nginx:
+    image: nginx:1.27.4
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./php:/var/www/slim_app
+    ports:
+      - "8000:80"
+    depends_on:
+      - php    

@@ -1,0 +1,25 @@
+{
+    "name": "demo/slim",
+    "autoload": {
+        "psr-4": {
+            "MYLIB\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "demo",
+            "email": "demo@demo.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2.27",
+        "slim/slim": "^4.8",
+        "laminas/laminas-diactoros": "^2.6"
+    },
+    "scripts": {
+        "server": "php -S localhost:8000 -t public"
+    },
+    "config": {
+        "process-timeout": 0
+    }
+}
