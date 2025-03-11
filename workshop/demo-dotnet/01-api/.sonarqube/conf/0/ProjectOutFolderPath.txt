@@ -1,0 +1,1 @@
+/Users/somkiatpuisungnoen/data/slide/devsecops/secure-code/workshop/demo-dotnet/01-api/.sonarqube/out/0
