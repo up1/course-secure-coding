@@ -14,7 +14,8 @@
     "require": {
         "php": "^8.2.27",
         "slim/slim": "^4.8",
-        "laminas/laminas-diactoros": "^2.6"
+        "laminas/laminas-diactoros": "^2.6",
+        "firebase/php-jwt": "^6.11.0"
     },
     "scripts": {
         "server": "php -S localhost:8000 -t public"

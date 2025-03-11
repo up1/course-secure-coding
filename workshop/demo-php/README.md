@@ -22,8 +22,20 @@ $docker compose ps
 Access from web browser
 * http://localhost:8000
 
-## Step 3 :: 
+## Step 3 :: Broken Object Level Authorization (BOLA)
+* Always check if the resource ID matches the authenticated user
+* Centralize object access logic when possible
+* Consider using RBAC (role-based access control) for more complex permissions
+* Use auth middleware to extract identity
+
 ```
 $curl http://localhost:8000/api/users/2/not-secure -H "X-User-ID: 1"
 $curl http://localhost:8000/api/users/2/secure -H "X-User-ID: 1"
+```
+
+## Step 4 :: Broken Authentication
+```
+$curl -X POST http://localhost:8000/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=alice&password=password123"
 ```
