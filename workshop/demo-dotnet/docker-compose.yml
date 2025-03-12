@@ -9,6 +9,12 @@ services:
       context: ./01-api
       dockerfile: Dockerfile-scan
     command: >
-      sh -c "export PATH=\"$PATH:/root/.dotnet/tools\" && dotnet sonarscanner begin /k:\"${SONAR_PROJECT_KEY}\" /o:\"${SONAR_ORGANIZATION}\" /d:sonar.token=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"http://178.128.115.188:9000\" &&
+      sh -c "export PATH=\"$PATH:/root/.dotnet/tools\" && dotnet-sonarscanner begin /k:\"${SONAR_PROJECT_KEY}\" /o:\"${SONAR_ORGANIZATION}\" /d:sonar.token=\"${SONAR_TOKEN}\" /d:sonar.host.url=\"http://178.128.115.188:9000\" &&
          dotnet build ${SOLUTION_PATH} --no-incremental &&
-         dotnet sonarscanner end /d:sonar.token=\"${SONAR_TOKEN}\""
+         dotnet-sonarscanner end /d:sonar.token=\"${SONAR_TOKEN}\""
+
+  scan-secret:
+    image: zricethezav/gitleaks:latest
+    volumes:
+      - ./01-api:/app
+    command: ["dir", "/app", "-v"]
