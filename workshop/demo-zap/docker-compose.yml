@@ -1,0 +1,19 @@
+services:
+  zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    volumes:
+      - ./openapi/:/zap/wrk/:rw
+      - ./reports/:/zap/reports/:rw
+    command: zap-api-scan.py -f openapi -t openapi.yml -r /zap/reports/report.html -x /zap/reports/report.xml
+    networks:
+      - dast
+  petclinic:
+    image: springcommunity/spring-petclinic-rest
+    ports:
+      - "9966:9966"
+    networks:
+      - dast
+
+networks:
+  dast:
+    name: dast
