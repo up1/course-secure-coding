@@ -18,3 +18,9 @@ services:
     volumes:
       - ./01-api:/app
     command: ["dir", "/app", "-v"]
+  
+  api-test:
+    image: postman/newman
+    volumes:
+      - ./postman/json-placeholder.postman_collection.json:/etc/newman/1.json
+    command: ["run", "/etc/newman/1.json"]
