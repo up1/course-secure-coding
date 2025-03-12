@@ -24,3 +24,10 @@ services:
     volumes:
       - ./postman/json-placeholder.postman_collection.json:/etc/newman/1.json
     command: ["run", "/etc/newman/1.json"]
+  
+  zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    volumes:
+      - ./openapi/:/zap/wrk/:rw
+      - ./reports/:/zap/reports/:rw
+    command: zap-api-scan.py -f openapi -t openapi.yml -r /zap/reports/report.html -x /zap/reports/report.xml

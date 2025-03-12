@@ -64,13 +64,18 @@ builder.Services.AddRateLimiter(options =>
     };
 });
 
+builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 var app = builder.Build();
 
 app.UseRateLimiter(); // 🔐 Enable rate limiting
+app.MapOpenApi();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Add Swagger UI
+
 
 // 🔁 Seed Initial Data
 using (var scope = app.Services.CreateScope())

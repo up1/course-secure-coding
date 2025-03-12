@@ -1,0 +1,185 @@
+openapi: 3.0.1
+info:
+  title: 01-api | v1
+  version: 1.0.0
+servers:
+  - url: http://api01:8080
+paths:
+  /auth:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /auth/login-secure:
+    post:
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /logs/recent:
+    get:
+      tags:
+        - Logs
+      responses:
+        '200':
+          description: OK
+  /orders/{orderId}:
+    get:
+      tags:
+        - Orders
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /users/update-vulnerable/{id}:
+    put:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: OK
+  /users/update-secure/{id}:
+    put:
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    UpdateUserDto:
+      required:
+        - username
+        - email
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+    User:
+      required:
+        - username
+        - passwordHash
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        username:
+          type: string
+        passwordHash:
+          type: string
+        email:
+          type: string
+          nullable: true
+        role:
+          type: string
+          nullable: true
+        isAdmin:
+          type: boolean
+    UserLogin:
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+tags:
+  - name: Auth
+  - name: Logs
+  - name: Orders
+  - name: User
