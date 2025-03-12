@@ -47,18 +47,13 @@ $curl -X POST http://localhost:8000/login \
 * When a user is allowed to update their profile, but the backend blindly accepts all input, malicious users can modify sensitive properties
 * Use whitelist
 
-Working with bad practice
-```
-$curl -X PATCH http://localhost:8000/api/profile/bad \
-  -H "X-User-ID: 1" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "email=alice@safe.com&role=admin"
-```
-
 Better
 ```
-$curl -X PATCH http://localhost:8000/api/profile \
-  -H "X-User-ID: 1" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "email=alice@safe.com&role=admin"
+$curl --location --request PATCH 'http://localhost:8000/api/profile' \
+--header 'X-User-ID: 2' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "alice@safe.com",
+    "role": "admin"
+}'
 ```

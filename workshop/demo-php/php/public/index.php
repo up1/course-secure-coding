@@ -17,22 +17,25 @@ $users = [
 ];
 
 function getUserById($users, $id) {
-    return array_filter($users, function($user) use ($id) {
-        return $user['id'] === $id;
-    });
+    foreach ($users as $user) {
+        if ($user['id'] === $id) {
+            return $user;
+        }
+    }
+    return null;
 }
 
 
 // Middlewares
-
 // Simulated auth middleware using header "X-User-ID"
-$app->add(function (Request $request, $handler) use (&$users) {
+$app->add(function (Request $request, $handler) use (&$users, $app) {
     $userId = (int)($request->getHeaderLine('X-User-ID'));
-    if (!isset($users[$userId])) {
-        $response = new \Slim\Psr7\Response();
-        return $response->withStatus(401)->withBody(\Slim\Psr7\Stream::createFromString('Unauthorized'));
+    $foundUser = getUserById($users, $userId);
+    if (empty($foundUser)) {
+        $response = $app->getResponseFactory()->createResponse();
+        return $response->withStatus(401);
     }
-    $request = $request->withAttribute('user', getUserById($users, $userId));
+    $request = $request->withAttribute('user', $foundUser);
     return $handler->handle($request);
 });
 
@@ -121,7 +124,7 @@ $app->post('/login', function (Request $request, Response $response) use ($users
 // ✅ Safe update with allowed field filtering
 $app->patch('/api/profile', function (Request $request, Response $response) use (&$users) {
     $authUser = $request->getAttribute('user');
-    $parsed = $request->getParsedBody();
+    $parsed = json_decode($request->getBody()->getContents(), true) ?? [];
 
     // ✅ Only allow specific fields
     $allowedFields = ['email'];
@@ -139,12 +142,12 @@ $app->patch('/api/profile', function (Request $request, Response $response) use 
         return $response->withStatus(400);
     }
 
-    // Merge and update
-    $users[$authUser['id']] = array_merge($users[$authUser['id']], $parsed);
+    // Merge and update user
+    $user = array_merge($authUser, $parsed);
 
     $response->getBody()->write(json_encode([
         'message' => 'Profile updated successfully',
-        'user' => $users[$authUser['id']]
+        'user' => $user,
     ]));
     return $response->withHeader('Content-Type', 'application/json');
 });
