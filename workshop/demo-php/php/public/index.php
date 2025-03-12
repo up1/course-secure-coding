@@ -153,3 +153,4 @@ $app->patch('/api/profile', function (Request $request, Response $response) use 
 });
 
 $app->run();
+//Demo
