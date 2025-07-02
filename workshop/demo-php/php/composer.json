@@ -15,7 +15,8 @@
         "php": "^8.2.27",
         "slim/slim": "^4.8",
         "laminas/laminas-diactoros": "^2.6",
-        "firebase/php-jwt": "^6.11.0"
+        "firebase/php-jwt": "^6.11.0",
+        "phrity/slim-openapi": "^1.2.1"
     },
     "scripts": {
         "server": "php -S localhost:8000 -t public"

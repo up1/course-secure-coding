@@ -4,11 +4,15 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Phrity\Slim\OpenApi;
 use Slim\Factory\AppFactory;
 use Firebase\JWT\JWT;
 
 $app = AppFactory::create();
 $secretKey = 'super-secret-key'; // Use .env in real apps
+
+$openapi = new OpenApi('openapi.yml');
+$openapi->route($app);
 
 // ✅ Passwords are hashed (simulating DB)
 $users = [
