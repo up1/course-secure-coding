@@ -35,7 +35,7 @@ app.post('/api/redeem-coupon', fakeAuth, couponLimiter, (req, res) => {
   }
 
   couponUses[req.userId] = true;
-  res.send('✅ Coupon redeemed successfully!');
+  res.send('Coupon redeemed successfully!');
 });
 
 app.listen(3000, () => console.log('✅ Secure coupon server running at http://localhost:3000'));
