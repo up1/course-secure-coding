@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 
-app.use(express.json()); // No payload size limit!
+app.use(express.json()); // No payload size limit! (default of express is 100kb)
 
 // Simulate an expensive operation
 app.post('/api/upload', (req, res) => {

@@ -10,6 +10,7 @@ app.use(helmet());
 
 // ✅ Limit incoming JSON body size to 10KB
 app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' })); // Increase URL-encoded payload limit
 
 // ✅ Rate limiting: 100 requests per 15 minutes per IP
 const limiter = rateLimit({

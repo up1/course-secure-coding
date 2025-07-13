@@ -33,3 +33,12 @@ $node 03-api.js
 
 List of APIs
 * POST http://localhost:3000/api/users/1
+
+## 4. Unrestricted Resource Consumption
+```
+$npm i
+$node 04-api.js
+```
+
+List of APIs
+* POST http://localhost:3000/api/upload
