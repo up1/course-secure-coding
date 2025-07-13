@@ -1,8 +1,19 @@
 // insecure-server.js
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+
+// Misconfiguration 1: Allowing all origins in CORS
+app.use(cors());
+
+// Misconfiguration 2: Exposing server information
+app.use((req, res, next) => {
+    res.setHeader('X-Powered-By', 'Express 4.21.2');
+    res.setHeader('Server', 'Apache/2.4.1');
+    next();
+});
 
 // Insecure CORS (open to all origins)
 app.use((req, res, next) => {

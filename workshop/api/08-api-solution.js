@@ -13,6 +13,13 @@ app.use(cors({
   methods: ['GET', 'POST'],
 }));
 
+// ✅ Remove or obscure server information headers
+app.use((req, res, next) => {
+  res.removeHeader('X-Powered-By'); // Remove default Express header
+  res.setHeader('Server', 'WebServer'); // Generic server name
+  next();
+});
+
 app.use(express.json());
 
 // ✅ Generic error handler
