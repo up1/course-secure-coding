@@ -42,3 +42,12 @@ $node 04-api.js
 
 List of APIs
 * POST http://localhost:3000/api/upload
+
+## 5. Broken Function Level Authorization
+```
+$npm i
+$node 05-api.js
+```
+
+List of APIs
+* DELETE http://localhost:3000/api/users/1
