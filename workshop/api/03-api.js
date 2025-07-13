@@ -17,7 +17,7 @@ function fakeAuth(req, res, next) {
 }
 
 // ❌ Insecure: Accepts any fields from client
-app.patch('/api/users/:id', fakeAuth, (req, res) => {
+app.post('/api/users/:id', fakeAuth, (req, res) => {
   const targetUser = users.find(u => u.id === parseInt(req.params.id));
   if (!targetUser) return res.status(404).send('User not found');
 

@@ -24,3 +24,12 @@ $node 02-api.js
 List of APIs
 * POST http://localhost:3000/login
 * GET http://localhost:3000/profile?userId=1
+
+## 3. Broken Object Property Level Authorization
+```
+$npm i
+$node 03-api.js
+```
+
+List of APIs
+* POST http://localhost:3000/api/users/1
