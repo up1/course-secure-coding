@@ -60,3 +60,13 @@ $node 06-api.js
 
 List of APIs
 * POST http://localhost:3000/api/redeem-coupon
+
+
+## 8. Security Misconfiguration
+```
+$npm i
+$node 08-api.js
+```
+
+List of APIs
+* GET http://localhost:3000/api/error
