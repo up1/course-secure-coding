@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 const users = [
-  { id: 1, username: 'alice', password: 'password123' }, // plain text password 😱
+  { id: 1, username: 'user01', password: 'password123' }, // plain text password 😱
 ];
 
 app.use(express.json());
