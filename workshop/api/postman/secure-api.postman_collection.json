@@ -102,6 +102,35 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "03-BOPLA",
+			"item": [
+				{
+					"name": "Update user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"updated username\",\n    \"email\": \"updated email\",\n    \"new\": \"new\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/users/1"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
