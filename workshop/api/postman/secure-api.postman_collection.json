@@ -157,6 +157,26 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "05-BFLA",
+			"item": [
+				{
+					"name": "Delete user by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3000/api/users/1"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
