@@ -31,7 +31,15 @@ app.post('/api/users/:id', fakeAuth, (req, res) => {
   const safeUpdates = _.pick(req.body, allowedFields);
 
   Object.assign(targetUser, safeUpdates);
-  res.json({ message: 'User safely updated', user: targetUser });
+
+  // Return only safe, non-sensitive data (prevents excessive data exposure)
+  const safeUser = {
+    id: targetUser.id,
+    username: targetUser.username,
+    email: targetUser.email
+  };
+
+  res.json({ message: 'User safely updated', user: safeUser });
 });
 
 app.listen(3000, () => console.log('✅ Secure server running at http://localhost:3000'));
