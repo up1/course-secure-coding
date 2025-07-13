@@ -206,6 +206,26 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "08-Misconfig-secure",
+			"item": [
+				{
+					"name": "Get error",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:3000/api/error"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
