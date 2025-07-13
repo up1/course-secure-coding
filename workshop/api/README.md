@@ -4,3 +4,12 @@
 * Testing
 
 
+## 1. Broken Object Level Authorization (BOLA)
+```
+$npm i
+$node 01-api.js
+```
+
+List of APIs
+* http://localhost:3000/api/users/1
+* http://localhost:3000/api/users/2
