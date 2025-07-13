@@ -51,3 +51,12 @@ $node 05-api.js
 
 List of APIs
 * DELETE http://localhost:3000/api/users/1
+
+## 6. Unrestricted Access to Sensitive Business Flow
+```
+$npm i
+$node 06-api.js
+```
+
+List of APIs
+* POST http://localhost:3000/api/redeem-coupon

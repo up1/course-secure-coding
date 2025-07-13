@@ -177,6 +177,35 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "06-UASBF",
+			"item": [
+				{
+					"name": "Redeem coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"coupon\":\"DISCOUNT2024\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/redeem-coupon"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
