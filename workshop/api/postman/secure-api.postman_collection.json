@@ -131,6 +131,32 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "04-Unrestricted-Resource",
+			"item": [
+				{
+					"name": "Upload file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-id",
+								"value": "1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": "http://localhost:3000/api/upload"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
