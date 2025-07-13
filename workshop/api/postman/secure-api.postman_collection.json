@@ -209,7 +209,8 @@
 					"name": "Metric",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "http://localhost:3000/metrics"
 					},
 					"response": []
 				}

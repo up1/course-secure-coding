@@ -60,6 +60,7 @@ $node 06-api.js
 
 List of APIs
 * POST http://localhost:3000/api/redeem-coupon
+* GET http://localhost:3000/metrics
 
 
 ## 8. Security Misconfiguration
