@@ -9,15 +9,8 @@ const users = [
 
 app.use(express.json());
 
-// Simulated authentication (user id from request header)
-function fakeAuth(req, res, next) {
-  const userId = parseInt(req.headers["x-user-id"]);
-  req.user = users.find((u) => u.id === userId);
-  next();
-}
-
 // ❌ No authorization check here
-app.get("/api/users/:id", fakeAuth, (req, res) => {
+app.get("/api/users/:id", (req, res) => {
   const user = users.find((u) => u.id === parseInt(req.params.id));
   if (!user) return res.status(404).send("User not found");
   res.json(user);
