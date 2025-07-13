@@ -12,11 +12,17 @@ app.use(express.json());
 
 function fakeAuth(req, res, next) {
   const userId = parseInt(req.headers['x-user-id']);
+  const requestedUserId = parseInt(req.params.id);
+  if (userId !== requestedUserId) {
+    return res.status(403).send('Forbidden: You can only update your own user');
+  }
   req.user = users.find(u => u.id === userId);
+  if (!req.user) return res.status(401).send('Unauthorized');
+
   next();
 }
 
-app.patch('/api/users/:id', fakeAuth, (req, res) => {
+app.post('/api/users/:id', fakeAuth, (req, res) => {
   const targetUser = users.find(u => u.id === parseInt(req.params.id));
   if (!targetUser) return res.status(404).send('User not found');
 
