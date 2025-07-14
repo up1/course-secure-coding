@@ -21,3 +21,12 @@ $npm start
 List of URLs
 * API documentation with Swagger
   * http://localhost:3000/doc/
+
+## API Testing
+* [OFFAT - OFFensive Api Tester](https://github.com/OWASP/OFFAT)
+* [Install Python](https://www.python.org/)
+```
+$pip install "offat[api]"
+
+$offat -f swagger_output.json -o output.html -of html
+```
