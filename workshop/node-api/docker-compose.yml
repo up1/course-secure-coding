@@ -1,0 +1,10 @@
+services:
+  node-api:
+    image: node-api:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001

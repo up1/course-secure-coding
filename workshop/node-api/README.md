@@ -31,3 +31,23 @@ $pip install "offat[api]"
 
 $offat -f swagger_output.json -o output.html -of html
 ```
+
+## Working with Docker
+
+Build image
+```
+$docker compose build
+```
+
+Generate by [syft](https://github.com/anchore/syft)
+```
+$syft node-api:1.0 -o cyclonedx-json@1.6
+$syft node-api:1.0 --output cyclonedx-json@1.6=docker-sbom.json
+```
+
+Generate SBOM from Docker image
+```
+$docker sbom --version
+
+$docker sbom node-api:1.0 --format spdx-json --output docker-sbom.json
+```
