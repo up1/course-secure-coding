@@ -1,0 +1,344 @@
+openapi: 3.0.1
+info:
+  title: OWASP Juice Shop (v2.18.0)
+  description: This is a **manually produced** documentation of **a small part** of
+    the OWASP Juice Shop API.
+  contact:
+    name: Juice Shop by @kimminich (https://github.com/bkimminich/juice-shop)
+  version: 0.0.2
+servers:
+- url: http://juice_shop:3000/
+paths:
+  /:
+    get:
+      description: |
+        Start page of juice shop.
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfPersons
+                type: array
+                items:
+                  title: Person
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    single:
+                      type: boolean
+  /api/Products/1:
+    put:
+      description: |
+        Gets `Person` objects.
+        Optional query param of **size** determines
+        size of returned array
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfPersons
+                type: array
+                items:
+                  title: Person
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    single:
+                      type: boolean
+  /api/Feedbacks:
+    get:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+    put:
+      description: |
+        Gets `Person` objects.
+        Optional query param of **size** determines
+        size of returned array
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfPersons
+                type: array
+                items:
+                  title: Person
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    single:
+                      type: boolean
+  /users:
+    put:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+  /users/createWithArray:
+    put:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+  /stores/order:
+    put:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+  /rest/user/whoami:
+    get:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+  /rest/user/login:
+    post:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: size
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+  /rest/product/search:
+    get:
+      description: |
+        Gets array of Feedbacks.
+      parameters:
+      - name: q
+        in: query
+        description: Size of array
+        required: true
+        schema:
+          type: number
+          format: double
+      responses:
+        "200":
+          description: Successful response
+          content:
+            '*/*':
+              schema:
+                title: ArrayOfFeedbacks
+                type: array
+                items:
+                  title: data
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    comment:
+                      type: string
+                    rating:
+                      type: integer
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                    UserId:
+                      type: integer
+components: {}
+x-original-swagger-version: "2.0"
