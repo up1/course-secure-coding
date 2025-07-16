@@ -16,7 +16,7 @@ function fakeAuth(req, res, next) {
   console.log("Request ID:", requestId);
   console.log("Fake auth user ID:", userId);
   if (!userId) return res.status(401).send("Unauthorized");
-  if (userId !== requestId) return res.status(403).send("Forbidden");
+  if (userId != requestId) return res.status(403).send("Forbidden");
   if (!users.some((u) => u.id === userId)) return res.status(404).send("User not found");
 
   req.user = users.find((u) => u.id === userId);
