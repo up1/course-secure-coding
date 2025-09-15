@@ -18,3 +18,4 @@
 
 ## Workshops
 * [NodeJS workshop](https://github.com/up1/workshop-nodejs-secure)
+* [.NET workshop](https://github.com/up1/demo-dotnet-secure)
