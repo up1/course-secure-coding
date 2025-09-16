@@ -2,3 +2,9 @@
 paths = [
   "workshop/demo-secure-code/api/*"
 ]
+
+[[rules]]
+id = "custom-jwt-secret-key"
+description = "Detect hardcoded JWT secret key: ThisIsADevSecretKeyForJWTGeneration123!"
+regex = '''ThisIsADevSecretKeyForJWTGeneration123!'''
+tags = ["key", "jwt", "secret"]
