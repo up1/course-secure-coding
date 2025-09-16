@@ -35,16 +35,54 @@
 			"response": []
 		},
 		{
-			"name": "Get order by id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/api/insecure/orders/1"
-			},
-			"response": []
-		},
-		{
 			"name": "Create a new order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create s new order :: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Create s new order :: Response matches JSON schema\", function () {",
+							"    const schema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            id: { type: \"integer\" },",
+							"            userId: { type: \"integer\" },",
+							"            orderItems: {",
+							"                type: \"array\",",
+							"                items: {",
+							"                    type: \"object\",",
+							"                    properties: {",
+							"                        productId: { type: \"integer\" },",
+							"                        quantity: { type: \"integer\" },",
+							"                        pricePerItem: { type: \"number\" }",
+							"                    },",
+							"                    required: [\"productId\", \"quantity\", \"pricePerItem\"]",
+							"                }",
+							"            },",
+							"            totalAmount: { type: \"number\" },",
+							"            status: { type: \"string\" },",
+							"            createdAt: { type: \"string\", format: \"date-time\" }",
+							"        },",
+							"        required: [\"id\", \"userId\", \"orderItems\", \"totalAmount\", \"status\", \"createdAt\"]",
+							"    };",
+							"",
+							"    const validate = require('ajv')().compile(schema);",
+							"    const valid = validate(response);",
+							"    pm.expect(valid, validate.errors).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -58,6 +96,60 @@
 					}
 				},
 				"url": "http://localhost:8080/api/insecure/orders"
+			},
+			"response": []
+		},
+		{
+			"name": "Get order by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get order by id :: Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"const schema = {",
+							"    type: \"object\",",
+							"    properties: {",
+							"        id: { type: \"integer\" },",
+							"        userId: { type: \"integer\" },",
+							"        orderItems: {",
+							"            type: \"array\",",
+							"            items: {",
+							"                type: \"object\",",
+							"                properties: {",
+							"                    productId: { type: \"integer\" },",
+							"                    quantity: { type: \"integer\" },",
+							"                    pricePerItem: { type: \"number\" }",
+							"                },",
+							"                required: [\"productId\", \"quantity\", \"pricePerItem\"]",
+							"            }",
+							"        },",
+							"        totalAmount: { type: \"number\" },",
+							"        status: { type: \"string\" },",
+							"        createdAt: { type: \"string\", format: \"date-time\" }",
+							"    },",
+							"    required: [\"id\", \"userId\", \"orderItems\", \"totalAmount\", \"status\", \"createdAt\"]",
+							"};",
+							"",
+							"pm.test(\"Get order by id :: Validate response JSON schema\", function () {",
+							"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/insecure/orders/1"
 			},
 			"response": []
 		}
