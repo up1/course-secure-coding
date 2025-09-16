@@ -18,6 +18,7 @@ sonar_scan:
   stage: scan-code
   script:
     - cd workshop/demo-secure-code/api
+    - dotnet tool install --global dotnet-sonarscanner
     - dotnet sonarscanner begin /k:"demo" /d:sonar.host.url="http://152.42.185.15:9000"  /d:sonar.token=${CI_SONAR_TOKEN}
     - dotnet build
     - dotnet sonarscanner end /d:sonar.token=${CI_SONAR_TOKEN}
