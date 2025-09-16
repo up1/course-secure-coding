@@ -2,6 +2,7 @@
 
 stages:
   - build
+  - dependency-check
   - scan-code
   - security
 
@@ -13,6 +14,22 @@ build-api:
   only:
     - main
 
+# Dependency check with OWASP Dependency-Check
+dependency_check:
+  stage: dependency-check
+  script:
+    - cd workshop/demo-secure-code/
+    - dotnet tool install --global CycloneDX
+    - mkdir -p sbom
+    - dotnet CycloneDX demo-secure-code.sln -o ./sbom --filename bom.json
+    - >
+      curl -X "POST" "http://152.42.205.85:8081/api/v1/bom"
+      -H 'Content-Type: multipart/form-data'
+      -H "X-Api-Key: ${CI_TRACKING_KEY}"
+      -F "autoCreate=false"
+      -F "projectName=api-dotnet"
+      -F "bom=@./sbom/bom.json"
+  
 # Scan code with sonar-scanner for .net projects in folder workshop/demo-secure-code
 sonar_scan:
   stage: scan-code
