@@ -16,5 +16,5 @@ build-api:
 gitleaks_scan:
   stage: security
   script:
-    - docker run -v $(pwd):/src zricethezav/gitleaks detect --source=/src --config=/src/gitleaks.toml --exit-code=1 # Scan the current repository, use a config file, and exit with an error code if leaks are found
+    - docker run -v $(pwd):/src zricethezav/gitleaks detect --source=/src --config=/src/gitleaks.toml --verbose --exit-code=1 # Scan the current repository, use a config file, and exit with an error code if leaks are found
   allow_failure: false # Prevent the pipeline from passing if leaks are found
