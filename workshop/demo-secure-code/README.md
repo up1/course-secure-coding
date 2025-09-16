@@ -27,3 +27,11 @@ Build image and rin container
 $docker compose build api
 $docker compose up -d api
 ```
+
+List of URLs of API
+* http://localhost:8080/swagger/index.html
+* http://localhost:8080/health
+
+API testing with Postman
+* In folder `api-test`
+  * Import file JSON to Postman
