@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "672dfa9c-b7b5-461d-a8f9-54757f31ef77",
-		"name": "api-test-insecure",
+		"_postman_id": "16a788a8-41bb-4e71-96ec-f049faf5aa38",
+		"name": "api-test-secure",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "1453931",
-		"_collection_link": "https://red-firefly-245852.postman.co/workspace/msa202509~e9f829cb-396c-4b90-b61e-59ae9bcb3bad/collection/1453931-672dfa9c-b7b5-461d-a8f9-54757f31ef77?action=share&source=collection_link&creator=1453931"
+		"_collection_link": "https://red-firefly-245852.postman.co/workspace/msa202509~e9f829cb-396c-4b90-b61e-59ae9bcb3bad/collection/1453931-16a788a8-41bb-4e71-96ec-f049faf5aa38?action=share&source=collection_link&creator=1453931"
 	},
 	"item": [
 		{
-			"name": "Health check",
+			"name": "Get token",
 			"event": [
 				{
 					"listen": "test",
@@ -18,9 +18,8 @@
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Body matches string\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"Healthy\");",
-							"});"
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"LOGIN_TOKEN\", jsonData.token);"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -30,7 +29,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/health"
+				"url": "http://localhost:8080/api/token"
 			},
 			"response": []
 		},
@@ -84,18 +83,24 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{LOGIN_TOKEN}}"
+					}
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"userId\": 1,\n    \"OrderItems\": [\n        {\n            \"productId\": 1,\n            \"quantity\": 1,\n            \"pricePerItem\": 100\n        }\n    ],\n    \"totalAmount\": 0.01, // They set their own price\n    \"status\": \"Shipped\", // They mark it as shipped immediately\n    \"createdAt\": \"2099-01-01T00:00:00Z\" // They manipulate the date\n}",
+					"raw": "{\n    \"orderItems\": [\n        {\n            \"productId\": 1,\n            \"quantity\": 1,\n            \"pricePerItem\": 100\n        }\n    ],\n    \"totalAmount\": 0.01, // They set their own price\n    \"status\": \"Shipped\", // They mark it as shipped immediately\n    \"createdAt\": \"2099-01-01T00:00:00Z\" // They manipulate the date\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/api/insecure/orders"
+				"url": "http://localhost:8080/api/secure/orders"
 			},
 			"response": []
 		},
@@ -147,9 +152,15 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{LOGIN_TOKEN}}"
+					}
+				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/api/insecure/orders/1"
+				"url": "http://localhost:8080/api/secure/orders/1"
 			},
 			"response": []
 		},
@@ -170,11 +181,23 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{LOGIN_TOKEN}}"
+					}
+				},
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/api/insecure/orders"
+				"url": "http://localhost:8080/api/secure/orders"
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "LOGIN_TOKEN",
+			"value": ""
 		}
 	]
 }
