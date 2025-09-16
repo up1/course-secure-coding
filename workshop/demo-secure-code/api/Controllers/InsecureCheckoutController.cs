@@ -36,4 +36,11 @@ public class InsecureCheckoutController : ControllerBase
         }
         return Ok(order);
     }
+
+    // Get all orders (insecure, exposes all data)
+    [HttpGet]
+    public IActionResult GetAllOrders()
+    {
+        return Ok(_orders);
+    }
 }
