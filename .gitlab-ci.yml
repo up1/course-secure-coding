@@ -2,6 +2,7 @@
 
 stages:
   - build
+  - security
 
 build-api:
   stage: build
@@ -10,3 +11,13 @@ build-api:
     - docker compose build api
   only:
     - main
+
+# Scan code with Gitleaks
+gitleaks_scan:
+  stage: security
+  image:
+    name: "zricethezav/gitleaks" # Use the official Gitleaks Docker image
+    entrypoint: [""] # Override the default entrypoint to directly run gitleaks commands
+  script:
+    - gitleaks detect --repo-path=./ --config=gitleaks.toml --exit-code=1 # Scan the current repository, use a config file, and exit with an error code if leaks are found
+  allow_failure: false # Prevent the pipeline from passing if leaks are found
