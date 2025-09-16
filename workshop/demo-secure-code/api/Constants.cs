@@ -9,4 +9,8 @@ public static class Constants
         public const string Issuer = "MyApiIssuer";
         public const string Audience = "MyApiAudience";
     }
+
+    // Get secret key from environment variable
+    // public static string Key => Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? throw new InvalidOperationException("JWT secret key not set in environment variables.");
+    
 }
