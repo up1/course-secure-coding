@@ -23,7 +23,7 @@ dependency_check:
     - mkdir -p sbom
     - dotnet CycloneDX demo-secure-code.sln -o ./sbom --filename bom.json
     - >
-      curl -X "POST" "http://152.42.205.85:8081/api/v1/bom"
+      curl -X "POST" "http://146.190.110.248:8081/api/v1/bom"
       -H 'Content-Type: multipart/form-data'
       -H "X-Api-Key: ${CI_TRACKING_KEY}"
       -F "autoCreate=false"
