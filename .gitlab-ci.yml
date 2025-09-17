@@ -38,7 +38,7 @@ sonar_scan:
     - dotnet tool install --global dotnet-sonarscanner || true
     - dotnet sonarscanner begin /k:"demo" /d:sonar.host.url="http://152.42.185.15:8080"  /d:sonar.token=${CI_SONAR_TOKEN}
     - dotnet build
-    - dotnet sonarscanner end /d:sonar.token=${CI_SONAR_TOKEN}
+    - dotnet sonarscanner end /d:sonar.host.url="http://152.42.185.15:8080"  /d:sonar.token=${CI_SONAR_TOKEN}
   only:
     - main
 
