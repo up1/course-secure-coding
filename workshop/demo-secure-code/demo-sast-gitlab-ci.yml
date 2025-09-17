@@ -1,0 +1,99 @@
+# Minimal, production-ready SAST + Dependency Scanning pipeline
+# Works for common stacks (Java, JS/TS, Python, Go, Ruby, .NET, etc.)
+# Customize the variables and rules below as needed.
+
+stages:
+  - secure
+
+# Pull in GitLab's maintained Secure templates
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+
+# Shared rules for when to run security scans
+# - On merge requests
+# - On the default branch (e.g., main)
+# - On scheduled pipelines
+.rules: &secure_rules
+  - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
+# Global tuning for analyzers
+variables:
+  # Trim noisy/vendor paths to reduce scan time & false positives
+  SAST_EXCLUDED_PATHS: "node_modules,dist,build,.venv,venv,coverage,target,bin,obj,vendor,.gitlab"
+  DS_EXCLUDED_PATHS: "node_modules,dist,build,.venv,venv,coverage,target,bin,obj,vendor,.gitlab"
+
+  # Speed up: disable Docker-in-Docker unless you really need it
+  SAST_DISABLE_DIND: "true"
+
+  # Show fix hints in SAST findings (where supported)
+  SAST_VULNERABILITY_REMEDIATION_ADVICE: "true"
+
+  # Fail the job if dependency files exceed this many (guards against repo bloat)
+  # DS_MAX_DEPENDENCY_FILES: "2000"
+
+  # If you use a private package registry, you can inject auth via environment
+  # (prefer masked CI/CD variables; do not hardcode secrets in this file)
+  # npm config example:
+  # NPM_CONFIG_USERCONFIG: "$CI_PROJECT_DIR/.npmrc"
+
+# --- Job customizations ---
+# The included templates define the following jobs by default:
+# - `sast`
+# - `dependency_scanning`
+# You can override aspects (rules, variables, tags) here without changing GitLab's templates.
+
+sast:
+  stage: secure
+  rules: *secure_rules
+  # Uncomment to run only when certain files change
+  # changes:
+  #   - '**/*.js'
+  #   - '**/*.ts'
+  #   - '**/*.py'
+  #   - '**/*.java'
+  #   - '**/*.go'
+  #   - '**/*.rb'
+  #   - '**/*.cs'
+  #   - 'pom.xml'
+  #   - 'package-lock.json'
+  #   - 'yarn.lock'
+  #   - 'go.mod'
+  #   - 'requirements.txt'
+  #   - 'Pipfile.lock'
+  #   - 'Gemfile.lock'
+  #   - 'packages.lock.json'
+  # Optional: add tags if your runners require them
+  # tags: [docker]
+
+  # Example: tweak analyzer behavior per language (optional)
+  # variables:
+  #   SAST_EXCLUDED_ANALYZERS: "bandit"   # disable a specific analyzer
+  #   SAST_INCLUDED_ANALYZERS: "semgrep"  # limit to a specific analyzer
+
+
+dependency_scanning:
+  stage: secure
+  rules: *secure_rules
+  # Optional: target specific lockfiles to reduce scope
+  # variables:
+  #   DS_PACKAGE_MANAGER_EXCLUDED: "npm"   # exclude a package manager
+  #   DS_SCAN_LOCKED_FILES_ONLY: "true"    # scan only lock/manifests
+
+  # If your runners require tags
+  # tags: [docker]
+
+# --- Optional: schedules ---
+# Create a nightly schedule in GitLab UI to run deeper scans off-hours.
+# The rule above already enables schedule-triggered pipelines.
+
+# --- Notes ---
+# 1) Merge Request Widgets & Security Dashboard will populate automatically
+#    when these jobs run successfully and produce security reports.
+# 2) For monorepos, consider duplicating/overriding jobs with path-specific rules.
+# 3) To add more scanners later, you can include additional templates:
+#    - template: Security/Secret-Detection.gitlab-ci.yml
+#    - template: Security/Container-Scanning.gitlab-ci.yml
+#    - template: Security/DAST.gitlab-ci.yml
